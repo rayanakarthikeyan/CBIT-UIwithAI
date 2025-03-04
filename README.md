@@ -1,4 +1,4 @@
-# Welcome to your Lovable project
+# Welcome to my project made at CBIT ( UI with AI )
 
 ## Project info
 
