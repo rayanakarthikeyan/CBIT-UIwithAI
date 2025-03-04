@@ -2,7 +2,7 @@
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/97b8ab26-b4d9-409c-93a1-ac2d82799282
+**URL**: https://lovable.dev/projects/97b8ab26-b4d9-409c-93a1-ac2d82799282  OR https://preview--cozybookscape.lovable.app/#
 
 ## How can I edit this code?
 
