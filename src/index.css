@@ -123,6 +123,33 @@
   .timeline-dot {
     @apply absolute left-[-8.5px] w-5 h-5 rounded-full bg-library-wood border-2 border-library-paper;
   }
+  
+  /* Book flip card styles */
+  .flip-card {
+    @apply w-full max-w-sm mx-auto;
+    height: 480px;
+  }
+  
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+  
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+  
+  .transform-style-3d {
+    transform-style: preserve-3d;
+  }
+  
+  /* Drag and drop styles */
+  .draggable {
+    @apply cursor-grab active:cursor-grabbing;
+  }
+  
+  .drop-target {
+    @apply border-2 border-dashed border-library-wood/50 bg-library-wood/5;
+  }
 }
 
 @layer components {

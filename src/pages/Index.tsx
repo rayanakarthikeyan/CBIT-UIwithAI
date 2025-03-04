@@ -4,6 +4,9 @@ import BookShelf from '@/components/BookShelf';
 import ReadingJourney from '@/components/ReadingJourney';
 import Search from '@/components/Search';
 import UserProfile from '@/components/UserProfile';
+import BookRecommendations from '@/components/BookRecommendations';
+import ReadingChallenges from '@/components/ReadingChallenges';
+import BookCategories from '@/components/BookCategories';
 import { LibraryProvider } from '@/context/LibraryContext';
 
 const Index = () => {
@@ -26,7 +29,22 @@ const Index = () => {
         
         <div className="h-px w-full max-w-5xl mx-auto bg-library-wood/10 my-4"></div>
         
+        {/* New component: Book Recommendations */}
+        <BookRecommendations />
+        
+        <div className="h-px w-full max-w-5xl mx-auto bg-library-wood/10 my-4"></div>
+        
         <ReadingJourney />
+        
+        <div className="h-px w-full max-w-5xl mx-auto bg-library-wood/10 my-4"></div>
+        
+        {/* New component: Reading Challenges */}
+        <ReadingChallenges />
+        
+        <div className="h-px w-full max-w-5xl mx-auto bg-library-wood/10 my-4"></div>
+        
+        {/* New component: Book Categories */}
+        <BookCategories />
         
         <div className="h-px w-full max-w-5xl mx-auto bg-library-wood/10 my-4"></div>
         
