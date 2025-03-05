@@ -7,6 +7,9 @@ import UserProfile from '@/components/UserProfile';
 import BookRecommendations from '@/components/BookRecommendations';
 import ReadingChallenges from '@/components/ReadingChallenges';
 import BookCategories from '@/components/BookCategories';
+import VoiceSearch from '@/components/VoiceSearch';
+import ReadingMoodTracker from '@/components/ReadingMoodTracker';
+import AIBookRecommender from '@/components/AIBookRecommender';
 import { LibraryProvider } from '@/context/LibraryContext';
 
 const Index = () => {
@@ -25,25 +28,30 @@ const Index = () => {
           </div>
         </header>
         
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+          <VoiceSearch />
+        </div>
+        
         <BookShelf />
         
         <div className="h-px w-full max-w-5xl mx-auto bg-library-wood/10 my-4"></div>
         
-        {/* New component: Book Recommendations */}
         <BookRecommendations />
         
         <div className="h-px w-full max-w-5xl mx-auto bg-library-wood/10 my-4"></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ReadingMoodTracker />
+        </div>
         
         <ReadingJourney />
         
         <div className="h-px w-full max-w-5xl mx-auto bg-library-wood/10 my-4"></div>
         
-        {/* New component: Reading Challenges */}
         <ReadingChallenges />
         
         <div className="h-px w-full max-w-5xl mx-auto bg-library-wood/10 my-4"></div>
         
-        {/* New component: Book Categories */}
         <BookCategories />
         
         <div className="h-px w-full max-w-5xl mx-auto bg-library-wood/10 my-4"></div>
@@ -53,6 +61,8 @@ const Index = () => {
         <div className="h-px w-full max-w-5xl mx-auto bg-library-wood/10 my-4"></div>
         
         <UserProfile />
+        
+        <AIBookRecommender />
       </MainLayout>
     </LibraryProvider>
   );
