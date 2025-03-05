@@ -164,6 +164,11 @@
     border-library-wood/10 shadow-md transition-all duration-300
     hover:shadow-lg hover:border-library-wood/20;
   }
+  
+  /* Enhanced drag and drop styles */
+  .drop-target-active {
+    @apply ring-2 ring-library-wood ring-offset-2 shadow-lg;
+  }
 }
 
 @layer utilities {
@@ -177,5 +182,14 @@
   
   .text-shadow-lg {
     text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+  }
+  
+  /* Cursor styles for drag operations */
+  .cursor-grab {
+    cursor: grab;
+  }
+  
+  .cursor-grabbing {
+    cursor: grabbing;
   }
 }
