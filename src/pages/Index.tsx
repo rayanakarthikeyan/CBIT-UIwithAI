@@ -28,40 +28,52 @@ const Index = () => {
           </div>
         </header>
         
+        {/* Voice Search */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
           <VoiceSearch />
         </div>
         
+        {/* Bookshelf */}
         <BookShelf />
         
         <div className="h-px w-full max-w-5xl mx-auto bg-library-wood/10 my-4"></div>
         
-        <BookRecommendations />
-        
-        <div className="h-px w-full max-w-5xl mx-auto bg-library-wood/10 my-4"></div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <ReadingMoodTracker />
-        </div>
-        
-        <ReadingJourney />
-        
-        <div className="h-px w-full max-w-5xl mx-auto bg-library-wood/10 my-4"></div>
-        
-        <ReadingChallenges />
-        
-        <div className="h-px w-full max-w-5xl mx-auto bg-library-wood/10 my-4"></div>
-        
-        <BookCategories />
-        
-        <div className="h-px w-full max-w-5xl mx-auto bg-library-wood/10 my-4"></div>
-        
+        {/* Search & Discovery */}
         <Search />
         
         <div className="h-px w-full max-w-5xl mx-auto bg-library-wood/10 my-4"></div>
         
+        {/* Book Recommendations */}
+        <BookRecommendations />
+        
+        <div className="h-px w-full max-w-5xl mx-auto bg-library-wood/10 my-4"></div>
+        
+        {/* Reading Mood Tracker */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ReadingMoodTracker />
+        </div>
+        
+        <div className="h-px w-full max-w-5xl mx-auto bg-library-wood/10 my-4"></div>
+        
+        {/* Reading Journey */}
+        <ReadingJourney />
+        
+        <div className="h-px w-full max-w-5xl mx-auto bg-library-wood/10 my-4"></div>
+        
+        {/* Reading Challenges */}
+        <ReadingChallenges />
+        
+        <div className="h-px w-full max-w-5xl mx-auto bg-library-wood/10 my-4"></div>
+        
+        {/* Book Categories */}
+        <BookCategories />
+        
+        <div className="h-px w-full max-w-5xl mx-auto bg-library-wood/10 my-4"></div>
+        
+        {/* User Profile */}
         <UserProfile />
         
+        {/* AI Book Recommender (floating) */}
         <AIBookRecommender />
       </MainLayout>
     </LibraryProvider>
