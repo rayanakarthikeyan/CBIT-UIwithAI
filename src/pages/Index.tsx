@@ -10,6 +10,10 @@ import BookCategories from '@/components/BookCategories';
 import VoiceSearch from '@/components/VoiceSearch';
 import ReadingMoodTracker from '@/components/ReadingMoodTracker';
 import AIBookRecommender from '@/components/AIBookRecommender';
+import AudiobookPlayer from '@/components/AudiobookPlayer';
+import ReadingTimeEstimator from '@/components/ReadingTimeEstimator';
+import RandomQuoteGenerator from '@/components/RandomQuoteGenerator';
+import ReadingMoodSelector from '@/components/ReadingMoodSelector';
 import { LibraryProvider } from '@/context/LibraryContext';
 
 const Index = () => {
@@ -28,6 +32,11 @@ const Index = () => {
           </div>
         </header>
         
+        {/* Audiobook Player */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+          <AudiobookPlayer />
+        </div>
+        
         {/* Voice Search */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
           <VoiceSearch />
@@ -35,6 +44,27 @@ const Index = () => {
         
         {/* Bookshelf */}
         <BookShelf />
+        
+        <div className="h-px w-full max-w-5xl mx-auto bg-library-wood/10 my-4"></div>
+        
+        {/* Reading Time Estimator */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+          <ReadingTimeEstimator />
+        </div>
+        
+        <div className="h-px w-full max-w-5xl mx-auto bg-library-wood/10 my-4"></div>
+        
+        {/* Random Quote Generator */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+          <RandomQuoteGenerator />
+        </div>
+        
+        <div className="h-px w-full max-w-5xl mx-auto bg-library-wood/10 my-4"></div>
+        
+        {/* Reading Mood Selector */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+          <ReadingMoodSelector />
+        </div>
         
         <div className="h-px w-full max-w-5xl mx-auto bg-library-wood/10 my-4"></div>
         

@@ -1,4 +1,3 @@
-
 import { createContext, useContext, useState, ReactNode } from 'react';
 import { Book, books as initialBooks } from '../data/books';
 
@@ -19,6 +18,14 @@ export interface BookCategory {
   books: Book[];
 }
 
+export interface ReadingMood {
+  id: string;
+  name: string;
+  emoji: string;
+  color: string; 
+  description: string;
+}
+
 interface LibraryContextType {
   books: Book[];
   readBooks: Book[];
@@ -29,23 +36,33 @@ interface LibraryContextType {
   markAsRead: (id: string, date?: string) => void;
   searchBooks: (query: string) => Book[];
   addNote: (id: string, note: string) => void;
-  // New functions for recommendations
   getRecommendedBooks: () => Book[];
   addToReadingList: (bookId: string) => void;
-  // Reading challenges
   challenges: ReadingChallenge[];
   updateChallengeProgress: (challengeId: string, progress: number) => void;
-  // Book categories
   categories: BookCategory[];
   addCategory: (name: string) => void;
   removeCategory: (id: string) => void;
   addBookToCategory: (bookId: string, categoryId: string) => void;
   removeBookFromCategory: (bookId: string, categoryId: string) => void;
+  isDarkMode: boolean;
+  toggleDarkMode: () => void;
+  audioProgress: Record<string, number>;
+  updateAudioProgress: (bookId: string, progress: number) => void;
+  audioBookmarks: Record<string, { position: number, note?: string }[]>;
+  addAudioBookmark: (bookId: string, position: number, note?: string) => void;
+  readingSpeed: number;
+  setReadingSpeed: (speed: number) => void;
+  favoriteQuotes: { text: string, author: string, source: string }[];
+  addFavoriteQuote: (quote: { text: string, author: string, source: string }) => void;
+  removeFavoriteQuote: (quoteText: string) => void;
+  availableMoods: ReadingMood[];
+  selectedMood: ReadingMood | null;
+  setSelectedMood: (mood: ReadingMood | null) => void;
 }
 
 const LibraryContext = createContext<LibraryContextType | undefined>(undefined);
 
-// Initial reading challenges
 const initialChallenges: ReadingChallenge[] = [
   {
     id: "c1",
@@ -79,7 +96,6 @@ const initialChallenges: ReadingChallenge[] = [
   },
 ];
 
-// Initial categories
 const initialCategories: BookCategory[] = [
   {
     id: "cat1",
@@ -98,11 +114,63 @@ const initialCategories: BookCategory[] = [
   }
 ];
 
+const initialMoods: ReadingMood[] = [
+  {
+    id: "mood1",
+    name: "Relaxed",
+    emoji: "😌",
+    color: "#4CAF50",
+    description: "In the mood for something light and easy-going"
+  },
+  {
+    id: "mood2",
+    name: "Adventurous",
+    emoji: "🚀",
+    color: "#FF9800",
+    description: "Ready for an exciting journey or thrilling story"
+  },
+  {
+    id: "mood3",
+    name: "Melancholic",
+    emoji: "😢",
+    color: "#2196F3",
+    description: "Something thoughtful and emotional"
+  },
+  {
+    id: "mood4",
+    name: "Curious",
+    emoji: "🧠",
+    color: "#9C27B0",
+    description: "Looking to learn something new"
+  },
+  {
+    id: "mood5",
+    name: "Romantic",
+    emoji: "❤️",
+    color: "#E91E63",
+    description: "In the mood for love and relationships"
+  },
+  {
+    id: "mood6",
+    name: "Inspired",
+    emoji: "✨",
+    color: "#00BCD4",
+    description: "Looking for motivation and inspiration"
+  }
+];
+
 export const LibraryProvider = ({ children }: { children: ReactNode }) => {
   const [books, setBooks] = useState<Book[]>(initialBooks);
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
   const [challenges, setChallenges] = useState<ReadingChallenge[]>(initialChallenges);
   const [categories, setCategories] = useState<BookCategory[]>(initialCategories);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [audioProgress, setAudioProgress] = useState<Record<string, number>>({});
+  const [audioBookmarks, setAudioBookmarks] = useState<Record<string, { position: number, note?: string }[]>>({});
+  const [readingSpeed, setReadingSpeed] = useState(250);
+  const [favoriteQuotes, setFavoriteQuotes] = useState<{ text: string, author: string, source: string }[]>([]);
+  const [availableMoods] = useState<ReadingMood[]>(initialMoods);
+  const [selectedMood, setSelectedMood] = useState<ReadingMood | null>(null);
 
   const readBooks = books.filter(book => book.isRead);
   const unreadBooks = books.filter(book => !book.isRead);
@@ -137,14 +205,11 @@ export const LibraryProvider = ({ children }: { children: ReactNode }) => {
     );
   };
 
-  // Get recommendations based on user's reading history
   const getRecommendedBooks = (): Book[] => {
     if (readBooks.length === 0) {
-      // If no reading history, recommend popular books
       return books.slice(0, 5);
     }
     
-    // Get genres from read books
     const favoriteGenres = readBooks
       .flatMap(book => book.genre)
       .reduce((acc: Record<string, number>, genre) => {
@@ -152,12 +217,10 @@ export const LibraryProvider = ({ children }: { children: ReactNode }) => {
         return acc;
       }, {});
     
-    // Sort genres by frequency
     const sortedGenres = Object.entries(favoriteGenres)
       .sort(([, countA], [, countB]) => countB - countA)
       .map(([genre]) => genre);
     
-    // Get books from favorite genres that user hasn't read yet
     const recommendations = unreadBooks.filter(book => 
       book.genre.some(genre => sortedGenres.includes(genre))
     );
@@ -165,13 +228,11 @@ export const LibraryProvider = ({ children }: { children: ReactNode }) => {
     return recommendations.slice(0, 5);
   };
 
-  // Add a book to reading list
   const addToReadingList = (bookId: string) => {
-    const categoryId = "cat2"; // "Want to Read" category
+    const categoryId = "cat2";
     addBookToCategory(bookId, categoryId);
   };
 
-  // Update challenge progress
   const updateChallengeProgress = (challengeId: string, progress: number) => {
     setChallenges(prevChallenges =>
       prevChallenges.map(challenge => {
@@ -190,7 +251,6 @@ export const LibraryProvider = ({ children }: { children: ReactNode }) => {
     );
   };
 
-  // Add a new category
   const addCategory = (name: string) => {
     const newCategory: BookCategory = {
       id: `cat${Date.now()}`,
@@ -201,14 +261,12 @@ export const LibraryProvider = ({ children }: { children: ReactNode }) => {
     setCategories(prevCategories => [...prevCategories, newCategory]);
   };
 
-  // Remove a category
   const removeCategory = (id: string) => {
     setCategories(prevCategories => 
       prevCategories.filter(category => category.id !== id)
     );
   };
 
-  // Add a book to a category
   const addBookToCategory = (bookId: string, categoryId: string) => {
     const book = books.find(b => b.id === bookId);
     if (!book) return;
@@ -216,7 +274,6 @@ export const LibraryProvider = ({ children }: { children: ReactNode }) => {
     setCategories(prevCategories =>
       prevCategories.map(category => {
         if (category.id === categoryId) {
-          // Check if book is already in the category
           if (category.books.some(b => b.id === bookId)) {
             return category;
           }
@@ -231,7 +288,6 @@ export const LibraryProvider = ({ children }: { children: ReactNode }) => {
     );
   };
 
-  // Remove a book from a category
   const removeBookFromCategory = (bookId: string, categoryId: string) => {
     setCategories(prevCategories =>
       prevCategories.map(category => {
@@ -244,6 +300,35 @@ export const LibraryProvider = ({ children }: { children: ReactNode }) => {
         return category;
       })
     );
+  };
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(prev => !prev);
+  };
+
+  const updateAudioProgress = (bookId: string, progress: number) => {
+    setAudioProgress(prev => ({
+      ...prev,
+      [bookId]: progress
+    }));
+  };
+
+  const addAudioBookmark = (bookId: string, position: number, note?: string) => {
+    setAudioBookmarks(prev => {
+      const bookBookmarks = prev[bookId] || [];
+      return {
+        ...prev,
+        [bookId]: [...bookBookmarks, { position, note }]
+      };
+    });
+  };
+
+  const addFavoriteQuote = (quote: { text: string, author: string, source: string }) => {
+    setFavoriteQuotes(prev => [...prev, quote]);
+  };
+
+  const removeFavoriteQuote = (quoteText: string) => {
+    setFavoriteQuotes(prev => prev.filter(quote => quote.text !== quoteText));
   };
 
   return (
@@ -267,6 +352,20 @@ export const LibraryProvider = ({ children }: { children: ReactNode }) => {
         removeCategory,
         addBookToCategory,
         removeBookFromCategory,
+        isDarkMode,
+        toggleDarkMode,
+        audioProgress,
+        updateAudioProgress,
+        audioBookmarks,
+        addAudioBookmark,
+        readingSpeed,
+        setReadingSpeed,
+        favoriteQuotes,
+        addFavoriteQuote,
+        removeFavoriteQuote,
+        availableMoods,
+        selectedMood,
+        setSelectedMood,
       }}
     >
       {children}
